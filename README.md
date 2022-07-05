@@ -1,4 +1,5 @@
 # Backend
+
 create a folder named "backend" and inside the backend folder create a file named main.py. To run the backend application uvicorn main:app --reload
 
 # Frontend
