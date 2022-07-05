@@ -4,13 +4,6 @@ from pydantic import BaseModel
 import requests
 from requests.auth import HTTPBasicAuth
 
-# class Part(BaseModel):
-#     id: int
-#     name: str
-#     type: str
-#     count: int
-#     station: str
-
 class Food(BaseModel):
     name:str
 
@@ -24,6 +17,10 @@ grocery_list = [
         "name":"bread"
     }
 ]
+
+@app.get("/frontdoor")
+async def front_end_check():
+    return "can you see me"
 
 @app.get("/")
 async def welcome():
