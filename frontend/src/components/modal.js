@@ -1,18 +1,11 @@
-import './App.css';
-import './components/modal';
-import Food from './components/food';
-import { useState } from 'react';
-import AddModal from './components/addModal';
+import '../index.css';
 
 const MOCK_DATA_MEALS = [
 	{
 		"title": "Oranges & Pomegranates In Kaffir Lime Syrup",
 		"image": "https://spoonacular.com/recipeImages/653999-312x231.jpg"
 	},
-	{
-		"title": "No Cook Cranberry Orange Relish",
-		"image": "https://spoonacular.com/recipeImages/653149-312x231.jpg"
-	},
+
 	{
 		"title": "Celery, Orange and Smoked Mackerel Salad",
 		"image": "https://spoonacular.com/recipeImages/637357-312x231.jpg"
@@ -47,36 +40,26 @@ const MOCK_DATA_MEALS = [
 	}
 ]
 
-function App() {
+function Modal(props) {
+    return (
+      <div className="modal">
+      <p>Hear are some meals using <strong> {props.name}</strong>!</p>
+      <br/>
 
-  const [addModalIsOpen, setAddModalIsOpen] = useState(false);
+      <ul>
+        {MOCK_DATA_MEALS.map((meal =>{
+          return (
+            <div>
+              <li>{meal.title}</li>
+              {/* <img src={meal.image} alt='food photo'/> */}
+            </div> 
+          )
+        }))}
+      </ul>
 
-  function FoodModalHandler(){
-    setAddModalIsOpen(true);
-      console.log('adding food');
-  }
-
-  function onClose(){
-    setAddModalIsOpen(false);
-      console.log('canceled');
-  }
-  function onAdd(){
-
+      <button className='btn' onClick={props.onClose}>Close</button>
+    </div>
+    );
   }
   
-  function AddFoodHandler(foodData){
-
-  }
-
-  return (
-  <div className="App">
-    <h1>My Grocery List</h1>
-    <button className='btn' onClick={FoodModalHandler}>Add Item</button>
-    <Food name='bread'></Food>
-    <Food name='oranges'></Food>
-    {addModalIsOpen && <AddModal onClose={onClose} onAddFood={AddFoodHandler}/>}
-  </div>
-  );
-}
-
-export default App;
+  export default Modal;

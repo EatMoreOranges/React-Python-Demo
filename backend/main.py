@@ -18,9 +18,6 @@ grocery_list = [
     }
 ]
 
-@app.get("/frontdoor")
-async def front_end_check():
-    return "can you see me"
 
 @app.get("/")
 async def welcome():
