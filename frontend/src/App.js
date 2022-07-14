@@ -1,7 +1,7 @@
 import './App.css';
 import './components/modal';
 import Food from './components/food';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import AddModal from './components/addModal';
 
 const MOCK_DATA_MEALS = [
@@ -47,6 +47,21 @@ const MOCK_DATA_MEALS = [
 	}
 ]
 
+const MOCK_LIST = [
+	{
+		"name": "oranges"
+	},
+	{
+		"name": "bread"
+	},
+	{
+		"name": "bananas"
+	},
+	{
+		"name": "cherries"
+	}
+]
+
 function App() {
 
   const [addModalIsOpen, setAddModalIsOpen] = useState(false);
@@ -68,12 +83,14 @@ function App() {
 
   }
 
+
   return (
   <div className="App">
     <h1>My Grocery List</h1>
     <button className='btn' onClick={FoodModalHandler}>Add Item</button>
-    <Food name='bread'></Food>
-    <Food name='oranges'></Food>
+    {MOCK_LIST.map(item => <Food name={item.name} key={item.name}/>)}
+    {/* <Food name='bread'></Food>
+    <Food name='oranges'></Food> */}
     {addModalIsOpen && <AddModal onClose={onClose} onAddFood={AddFoodHandler}/>}
   </div>
   );

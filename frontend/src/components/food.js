@@ -14,6 +14,8 @@ function onClose(){
     console.log('done searching for meals!');
 }
 
+
+
 return (
     <div className="card">
         <h2>{props.name}</h2>
