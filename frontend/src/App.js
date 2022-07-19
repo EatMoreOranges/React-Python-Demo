@@ -1,7 +1,7 @@
 import './App.css';
 import './components/modal';
 import Food from './components/food';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AddModal from './components/addModal';
 
 const MOCK_DATA_MEALS = [
@@ -65,22 +65,57 @@ const MOCK_LIST = [
 function App() {
 
   const [addModalIsOpen, setAddModalIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedList, setloadedList] = useState([]);
+
+  useEffect(() => {
+	setIsLoading(true); // set to loading before fetching data
+	console.log('basic get request');
+
+	fetch('http://localhost:3000/groceries')
+		.then(response => response.json()
+		.then(data => {
+			console.log(data)
+			setIsLoading(false);
+			setloadedList(data);
+		}
+	));
+  }, []);
+
+  if (isLoading){ // when we dont have data, return Loading
+		return <p>...Tasty Stuff Loading</p>
+	}
 
   function FoodModalHandler(){
     setAddModalIsOpen(true);
-      console.log('adding food');
+    console.log('adding food');
   }
 
   function onClose(){
     setAddModalIsOpen(false);
-      console.log('canceled');
+    console.log('canceled');
   }
-  function onAdd(){
 
-  }
-  
+
   function AddFoodHandler(foodData){
 
+	fetch('http://localhost:3000/add',{
+		method:'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({"name":"salsa"}),
+	})
+	.then(message => message.json())
+	.then(data => {
+		console.log('Success', data)
+		setIsLoading(false); // when we have data, remove loading indicator
+	})
+	.catch((error) => {
+		console.error('Error',error);
+	});
+
+	console.log('in AddFoodHandler');
   }
 
 
@@ -88,9 +123,10 @@ function App() {
   <div className="App">
     <h1>My Grocery List</h1>
     <button className='btn' onClick={FoodModalHandler}>Add Item</button>
-    {MOCK_LIST.map(item => <Food name={item.name} key={item.name}/>)}
+    {loadedList.map(item => <Food name={item.name} key={item.name}/>)}
     {/* <Food name='bread'></Food>
     <Food name='oranges'></Food> */}
+	{/* <Food groceryList = /> */}
     {addModalIsOpen && <AddModal onClose={onClose} onAddFood={AddFoodHandler}/>}
   </div>
   );
