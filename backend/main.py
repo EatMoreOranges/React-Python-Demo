@@ -1,13 +1,26 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-# from fastapi.middleware.cors import CORSMiddleware
-import requests
-# from requests.auth import HTTPBasicAuth
+from fastapi import FastAPI 
+from pydantic import BaseModel 
+from fastapi.middleware.cors import CORSMiddleware
+import requests #
+
+
+
+app = FastAPI()
+
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["POST","GET",],
+    allow_headers=["*"],
+)
 
 class Food(BaseModel):
     name:str
-
-app = FastAPI()
 
 grocery_list = [
     {
@@ -18,7 +31,7 @@ grocery_list = [
     }
 ]
 
-
+## Endpoints
 @app.get("/")
 async def welcome():
     return "Who's Hungry!"
