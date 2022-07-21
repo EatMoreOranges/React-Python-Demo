@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 # from fastapi.middleware.cors import CORSMiddleware
 import requests
-from requests.auth import HTTPBasicAuth
+# from requests.auth import HTTPBasicAuth
 
 class Food(BaseModel):
     name:str

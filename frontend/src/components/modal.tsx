@@ -1,3 +1,5 @@
+import React from 'react';
+import { MouseEventHandler } from 'react';
 import '../index.css';
 
 const MOCK_DATA_MEALS = [
@@ -40,25 +42,30 @@ const MOCK_DATA_MEALS = [
 	}
 ]
 
-function Modal(props) {
+type Props = {
+	name: string,
+	onClose: MouseEventHandler
+}
+
+function Modal(props: Props) {
     return (
       <div className="modal">
-      <p>Hear are some meals using <strong> {props.name}</strong>!</p>
-      <br/>
+		<p>Hear are some meals using <strong> {props.name}</strong>!</p>
+		<br/>
 
-      <ul>
-        {MOCK_DATA_MEALS.map((meal =>{
-          return (
-            <div>
-              <li>{meal.title}</li>
-              {/* <img src={meal.image} alt='food photo'/> */}
-            </div> 
-          )
-        }))}
-      </ul>
+		<ul>
+			{MOCK_DATA_MEALS.map((meal =>{
+			return (
+					<li key={meal.title}>
+						{meal.title}
+						{/* <img src={meal.image} alt='food photo'/> */}
+					</li>
+			)
+			}))}
+		</ul>
 
-      <button className='btn' onClick={props.onClose}>Close</button>
-    </div>
+		<button className='btn' onClick={props.onClose}>Close</button>
+		</div>
     );
   }
   
