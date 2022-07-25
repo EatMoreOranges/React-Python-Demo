@@ -1,89 +1,18 @@
 import './App.css';
-import './components/modal';
-import Food from './components/food';
 import { useState } from 'react';
-import AddModal from './components/addModal';
+import AddModal from './components/AddFood';
 import React from 'react';
-import { useEffect } from 'react';
-
-const MOCK_DATA_MEALS = [
-	{
-		"title": "Oranges & Pomegranates In Kaffir Lime Syrup",
-		"image": "https://spoonacular.com/recipeImages/653999-312x231.jpg"
-	},
-	{
-		"title": "No Cook Cranberry Orange Relish",
-		"image": "https://spoonacular.com/recipeImages/653149-312x231.jpg"
-	},
-	{
-		"title": "Celery, Orange and Smoked Mackerel Salad",
-		"image": "https://spoonacular.com/recipeImages/637357-312x231.jpg"
-	},
-	{
-		"title": "Vampire Kiss Martini",
-		"image": "https://spoonacular.com/recipeImages/664281-312x231.jpg"
-	},
-	{
-		"title": "Orange Cashew Salad",
-		"image": "https://spoonacular.com/recipeImages/653824-312x231.jpg"
-	},
-	{
-		"title": "Salt-Crusted Snapper With Blood Orange and Bay",
-		"image": "https://spoonacular.com/recipeImages/659192-312x231.jpg"
-	},
-	{
-		"title": "Orange Sauce For Chicken Or Duck",
-		"image": "https://spoonacular.com/recipeImages/653950-312x231.jpg"
-	},
-	{
-		"title": "Braid sweet citrus flavored licorice",
-		"image": "https://spoonacular.com/recipeImages/635786-312x231.jpg"
-	},
-	{
-		"title": "Detox Orange Carrot Juice",
-		"image": "https://spoonacular.com/recipeImages/641443-312x231.jpg"
-	},
-	{
-		"title": "No-Cook Cranberry Salad",
-		"image": "https://spoonacular.com/recipeImages/653202-312x231.jpg"
-	}
-]
-
-const MOCK_LIST = [
-	{
-		"name": "oranges"
-	},
-	{
-		"name": "bread"
-	},
-	{
-		"name": "bananas"
-	},
-	{
-		"name": "cherries"
-	}
-]
+import List from './components/List';
+import Recipe from './components/Recipe';
+import { isTemplateExpression } from 'typescript';
 
 export default function App() {
 
 	const [addModalIsOpen, setAddModalIsOpen] = useState(false);
-	const [foodList, setFoodList] = useState<Promise<any> | null>(null);
-
-	function updateFoodList() {
-		const newList = fetch('http://localhost:3000/groceries',{
-			method:'GET',
-			headers: {
-				'Content-Type': 'application/json',
-			}
-		})
-		.then(data => {
-			console.log('Success', data);
-			setFoodList(data.json);
-		})
-		.catch((error) => {
-			console.error('Error', error);
-		});
-	}
+	const [foodList, setFoodList] = useState<FoodList | null>(null);
+	const [recipeList, setRecipeList] = useState<RecipeList | null>(null);
+    const [currFood, setCurrFood] = React.useState<FoodObj | null>(null);
+	const [currRecipe, setCurrRecipe] = React.useState<RecipeObj | null>(null);
 
 	function FoodModalHandler(){
 		setAddModalIsOpen(true);
@@ -108,27 +37,72 @@ export default function App() {
 		.catch((error) => {
 			console.error('Error',error);
 		});
-
-		console.log('in AddFoodHandler');
-	}
-	
-	function AddFoodHandler(foodData: JSON){
-
+		setAddModalIsOpen(false);
 	}
 
-	useEffect(() => {
-		updateFoodList()
-	}, []);
+	async function fetchFoodList() {
+		const response = await fetch('http://localhost:3000/groceries', {
+			method:'GET',
+			headers: {
+				'accept': 'application/json',
+			}
+		});
+		const newList: FoodObj[] = await response.json();
+		console.log('newList', newList);
+		const newFoodList: FoodList = {
+			list: newList
+		}
+		
+		setFoodList(newFoodList);
+		console.log('foodList', foodList);
+	}
 
+	async function fetchRecipeList(ingredient: FoodObj) {
+		const apiKey: string = "3cb1e2ba7752408fb14257493782a1df";
+		const uri: string = "https://api.spoonacular.com/recipes/complexSearch?query=" + ingredient.name + "&apiKey=" + apiKey;
+
+		const response = await fetch(uri, {
+			method:'GET',
+			headers: {
+				'accept': 'application/json',
+			}
+		});
+		const newList = await response.json();
+		let newArray: RecipeObj[] = [];
+
+		newList.results?.forEach((item: any) => {
+			let newItem: RecipeObj = {
+				name: item.title,
+				image: item.image
+			};
+
+			newArray.push(newItem);
+		});
+		
+		const newRecipeList: RecipeList = {
+			list: newArray
+		}
+		
+		setRecipeList(newRecipeList);
+		setCurrFood(ingredient);
+		console.log('recipeList', recipeList);
+	}
+
+	React.useEffect(() => {
+		fetchFoodList();
+	}, [addModalIsOpen]);
 
 	return (
 		<div className="App">
 			<h1>My Grocery List</h1>
 			<button className='btn' onClick={FoodModalHandler}>Add Item</button>
-			{foodList?.map(item => <Food name={item.name} key={item.name}/>)}
-			{/* <Food name='bread'></Food>
-			<Food name='oranges'></Food> */}
-			{addModalIsOpen && <AddModal onClose={onClose} onAdd={onAdd} onAddFood={AddFoodHandler}/>}
+			{addModalIsOpen && <AddModal onClose={onClose} onAdd={onAdd}/>}
+			{/* {foodList ? foodList.list.map(item => <Food name={item.name} key={item.name}/>) : []} */}
+			<div className="row">
+				<List list={foodList} updateFunc={fetchRecipeList}/>
+				<List list={recipeList} updateFunc={setCurrRecipe}/>
+				<Recipe recipe={currRecipe} />
+			</div>
 		</div>
 	)
 }

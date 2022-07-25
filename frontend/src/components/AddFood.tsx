@@ -6,8 +6,7 @@ import '../index.css';
 
 type Props = {
     onClose: MouseEventHandler,
-    onAdd: (foodName: string) => void,
-    onAddFood: (foodData: JSON) => any
+    onAdd: (foodName: string) => void
 }
 
 function AddModal(props: Props) {
