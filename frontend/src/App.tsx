@@ -4,7 +4,6 @@ import AddModal from './components/AddFood';
 import React from 'react';
 import List from './components/List';
 import Recipe from './components/Recipe';
-import { isTemplateExpression } from 'typescript';
 
 export default function App() {
 
@@ -58,7 +57,7 @@ export default function App() {
 	}
 
 	async function fetchRecipeList(ingredient: FoodObj) {
-		const apiKey: string = "3cb1e2ba7752408fb14257493782a1df";
+		const apiKey: string = "5f7e2071f29948479325029bcd0a61d7";
 		const uri: string = "https://api.spoonacular.com/recipes/complexSearch?query=" + ingredient.name + "&apiKey=" + apiKey;
 
 		const response = await fetch(uri, {
