@@ -1,4 +1,7 @@
-start application:
+Eveything you need to know about the backend!
+ooor maybe some resources useful for the backend
+
+to start application:
 uvicorn main:app --reload  (you have issues with this command, try adding python -m  before the command) 
 
 virtual environment:
