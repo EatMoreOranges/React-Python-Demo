@@ -1,21 +1,26 @@
 # Backend
-we suggest creating a virtual environment for your backend
-create: python310 -m venv venv
-activate: source venv/Scripts/activate
-deactivate: deactivate
+## Set up
+We suggest creating a virtual environment for your backend.
 
-you need to install a few packages to get this project up and running. Run the following commands:
--  pip install fastapi
--  pip install "uvicorn[standard]"
+**Create:** python310 -m venv venv
 
-After install the packages create a folder named "backend" and inside the backend folder, create a file named main.py. Within the main.py file, add the following to create your app instance and your first endpoint!
+**Activate:** source venv/Scripts/activate
+
+**Deactivate:** deactivate
+
+You need to install a few packages to get this project up and running. Run the following commands:
+- [X] `pip install fastapi`
+- [X] `pip install "uvicorn[standard]"`
+
+After install the packages create a folder named "backend" and inside the backend folder, create a file named `main.py`. Within the `main.py` file, add the following to create your app instance and your first endpoint! 
+``` python
 app = FastAPI()
 
 @app.get("/")
 async def welcome():
     return "Who's Hungry!"
-
-Now you are ready to run your backend application. To run the backend application run the uvicorn main:app --reload . If uvicorn has been installed but you're getting a uvicorn not recognized error try adding python -m  before the command. (python -m uvicorn main:app --reload)
+```
+Now you are ready to start your backend application. To run the backend application run the `uvicorn main:app --reload` . *If uvicorn has been installed but you're getting a uvicorn not recognized error try adding **python -m**  before the command.* (`python -m uvicorn main:app --reload`)
 
 
 # Frontend
