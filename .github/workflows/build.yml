@@ -1,0 +1,49 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main, frontend-testing, api-calls]
+  pull_request:
+    branches: [main, frontend-testing, api-calls]
+
+jobs:
+  build:
+  #set up environment 
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 # what does this do exactly?
+      - name: Setup Node.js v14
+        uses: actions/setup-node@v1 # what does this do exactly?
+        with:
+          node-version: '14' # 16.15.1
+      - name: Restore node_modules
+        uses: actions/cache@v2 # what does this do exactly?
+        id: restore-node-modules
+        env:
+          cache-name: node_modules
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Restore NPM cache
+        uses: actions/cache@v2 # what does this do exactly?
+        if: steps.restore-node-modules.outputs.cache-hit != 'true'
+        env:
+          cache-name: npm-cache
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.cache-name }}-
+      - name: Install dependencies # what does everthing after this do ?
+        if: steps.restore-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Checkstyle Prettier
+        run: npm run prettier
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist
