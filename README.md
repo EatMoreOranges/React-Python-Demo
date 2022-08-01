@@ -2,15 +2,20 @@
 ## Set up
 We suggest creating a virtual environment for your backend.
 
+## <details> <summary>  Virtual Environment Setup</summary>
+
+
 **Create:** python310 -m venv venv
 
 **Activate:** source venv/Scripts/activate
 
 **Deactivate:** deactivate
 
+</details>
+
 You need to install a few packages to get this project up and running. Run the following commands:
-- [X] `pip install fastapi`
-- [X] `pip install "uvicorn[standard]"`
+- [ ] `pip install fastapi`
+- [ ] `pip install "uvicorn[standard]"`
 
 After install the packages create a folder named "backend" and inside the backend folder, create a file named `main.py`. Within the `main.py` file, add the following to create your app instance and your first endpoint! 
 ``` python
