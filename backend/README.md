@@ -1,5 +1,14 @@
-start application:
-uvicorn main:app --reload 
+Eveything you need to know about the backend!
+ooor maybe some resources useful for the backend
+
+to start application:
+uvicorn main:app --reload  (you have issues with this command, try adding python -m  before the command) 
+
+virtual environment:
+create: python310 -m venv venv
+activate: source venv/Scripts/activate
+deactivate: deactivate
+
 
 Http methods
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
