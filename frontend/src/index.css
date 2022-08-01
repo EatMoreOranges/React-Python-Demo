@@ -20,6 +20,8 @@ body {
   font-family: sans-serif;
   margin: 3rem;
   background-color: #dfdfdf;
+  height: 100%;
+  overflow: hidden;
 }
 
 h1, h2 {
@@ -34,7 +36,7 @@ h1, h2 {
   background-color: #800040;
   color: white;
   border: 1px solid #800040;
-  margin: 0 1rem;
+  margin: 5px;
 }
 
 .btn:hover {
@@ -93,4 +95,26 @@ h1, h2 {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   padding: 1rem;
 
+}
+
+ul {
+  text-align: left;
+  font-size: 80%;
+  list-style: none;
+  height: 25em;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+li {
+  cursor: pointer
+}
+
+.col {
+  width: 33%;
+  float: left;
+}
+
+.row {
+  padding: 20px;
 }
