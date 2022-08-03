@@ -19,6 +19,8 @@ You need to install a few packages to get this project up and running. Run the f
 
 After install the packages create a folder named "backend" and inside the backend folder, create a file named `main.py`. Within the `main.py` file, add the following to create your app instance and your first endpoint! 
 ``` python
+from fastapi import FastAPI 
+
 app = FastAPI()
 
 @app.get("/")
