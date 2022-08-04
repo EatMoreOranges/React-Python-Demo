@@ -1,15 +1,20 @@
 import React from "react";
 
+// Necessary Props
 interface Props {
     recipe: RecipeObj | null,
 }
 
-export default function Recipe({recipe}: Props) {
+function Recipe({recipe}: Props) {
 
     return (
-        <div className="col">
+        <div className="col recipe">
             {recipe?.name}
             <img src={recipe?.image} alt={recipe?.name} />
         </div>
     );
 }
+
+export default Recipe
+
+// DONE

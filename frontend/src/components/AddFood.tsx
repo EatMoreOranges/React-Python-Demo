@@ -1,17 +1,15 @@
-import { getValue } from '@testing-library/user-event/dist/utils';
 import React, { useState } from 'react';
-import { FormEventHandler } from 'react';
-import { MouseEventHandler } from 'react';
 import '../index.css';
 
+// Necessary Props
 type Props = {
-    onClose: MouseEventHandler,
     onAdd: (foodName: string) => void
 }
 
-function AddModal(props: Props) {
+function AddFood(props: Props) {
     const [foodName, setFoodName] = useState("");
 
+    // Function to continually update food name on change
     function changeFoodName(event: React.ChangeEvent<HTMLInputElement>) {
         setFoodName(event.target.value);
     }
@@ -20,10 +18,11 @@ function AddModal(props: Props) {
     return (
         <div>
             <input aria-label="foodName" onChange={changeFoodName} type='text'/>
-            <button className='btn' onClick={props.onClose}>Close</button>
             <button className='btn' onClick={() => {props.onAdd(foodName);} }>Add</button>
         </div> 
     );
   }
   
-  export default AddModal;
+  export default AddFood;
+
+  // DONE

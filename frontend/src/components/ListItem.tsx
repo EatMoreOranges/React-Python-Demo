@@ -1,16 +1,21 @@
 // @ts-ignore
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React from 'react';
 
+// Necessary Props
 interface Props {
     item: FoodObj | RecipeObj,
     updateFunc(ingredient: FoodObj): any | null
 }
 
-export default function ListItem({ item, updateFunc }: Props) {
+function ListItem({ item, updateFunc }: Props) {
     
     return (
         <li className="card" onClick={() => { updateFunc(item) }}>
-            { item.name }
+            { item.name[0].toUpperCase() + item.name.substring(1) }
         </li>
     );
 }
+
+export default ListItem
+
+// DONE

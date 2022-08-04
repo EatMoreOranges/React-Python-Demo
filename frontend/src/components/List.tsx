@@ -5,10 +5,11 @@ import React, { Dispatch, SetStateAction } from 'react';
 
 interface Props {
     list: FoodList | RecipeList | null,
+    // Keep updateFunc general for reusability
     updateFunc: any | null
 }
 
-export default function List({list, updateFunc}: Props) {
+function List({list, updateFunc}: Props) {
   
     const [search, setSearch] = React.useState('');
 
@@ -26,11 +27,14 @@ export default function List({list, updateFunc}: Props) {
             </div> */}
             <ul>
                 {
-                    list?.list?.filter(x => x.name.includes(search)).map((food: FoodObj, idx: any) => <ListItem item={food} updateFunc={updateFunc} />)
+                    // Filters list by search, then maps results to ListItems
+                    list?.list?.filter(x => x.name.includes(search)).map((food: FoodObj) => <ListItem item={food} updateFunc={updateFunc} />)
                 }
             </ul>
         </div>
     );
 }
 
+export default List
 
+// DONE
