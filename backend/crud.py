@@ -8,8 +8,8 @@ def get_grocery_list(db: Session, skip: int = 0, limit: int = 50):
     return db.query(models.Food).offset(skip).limit(limit).all()
 
 def add_to_grocery_list(db: Session, food: schemas.FoodCreate ):
-    db_food = models.Food(name = food.name, id = food.id)
+    db_food = models.Food(name = food.name)
     db.add(db_food)
     db.commit()
-    db.refresh()
+    db.refresh(db_food)
     return db_food

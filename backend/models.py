@@ -6,6 +6,5 @@ from database import Base
 class Food(Base):
     __tablename__ = "food"
 
-    name = Column(String, primary_key=True, index=True)
-    # id = Column(Integer,  index=True)
-    id = Column(String,  index=True)
+    id = Column(Integer,  index=True, primary_key=True)
+    name = Column(String, index=True)

@@ -10,6 +10,9 @@ import requests
 import crud, models, schemas
 from database import SessionLocal, engine
 
+# Initialize tables; generally, Alembic is a tool meant for initializing DBs and migrations.
+# But, for now we can use this
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 

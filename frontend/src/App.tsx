@@ -102,7 +102,7 @@ export default function App() {
 
 	React.useEffect(() => {
 		fetchFoodList();
-	}, [addModalIsOpen]);
+	}, [foodList]);
 
 	return (
 		<div className="App">
