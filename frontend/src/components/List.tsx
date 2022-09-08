@@ -25,12 +25,14 @@ function List({list, updateFunc}: Props) {
             {/* <div>
                 <input placeholder='Search' onChange={inputFilter}/>
             </div> */}
-            <ul>
-                {
-                    // Filters list by search, then maps results to ListItems
-                    list?.list?.filter(x => x.name.includes(search)).map((food: FoodObj) => <ListItem item={food} updateFunc={updateFunc} />)
-                }
-            </ul>
+            <div className="wrapper">
+                <ul>
+                    {
+                        // Filters list by search, then maps results to ListItems
+                        list?.list?.filter(x => x.name.includes(search)).map((food: FoodObj) => <ListItem item={food} updateFunc={updateFunc} />)
+                    }
+                </ul>
+            </div>
         </div>
     );
 }

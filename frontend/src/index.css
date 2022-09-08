@@ -97,11 +97,16 @@ h1, h2 {
 
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 81vh;
+}
+
 ul {
   text-align: left;
   font-size: 80%;
   list-style: none;
-  height: 25em;
   overflow-x: hidden;
   overflow-y: auto;
 }
