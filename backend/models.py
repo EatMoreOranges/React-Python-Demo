@@ -7,3 +7,5 @@ class Food(Base):
     __tablename__ = "food"
 
     name = Column(String, primary_key=True, index=True)
+    # id = Column(Integer,  index=True)
+    id = Column(String,  index=True)

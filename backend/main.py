@@ -34,7 +34,9 @@ def get_db():
         db.close()
 
 class Food2(BaseModel):
+    id:str
     name:str
+
 
 # grocery_list = [
 #     {"name":"oranges"},
@@ -67,7 +69,7 @@ def add_to_grocery_list(food:schemas.FoodCreate, db: Session = Depends(get_db)):
 #     return "Added " + item.name
 
 @app.get('/recipes')
-async def find_recipes(item:Food2):
+async def find_recipes(item:Food2): #schemas.Food
     result = []
     response = find_by_ingredients(item.name)
 
