@@ -5,6 +5,7 @@ import React from 'react';
 import List from './components/List';
 import Recipe from './components/Recipe';
 import { isTemplateExpression } from 'typescript';
+import {v4 as uuid} from 'uuid';
 
 export default function App() {
 
@@ -22,6 +23,11 @@ export default function App() {
 	function onClose(){
 		setAddModalIsOpen(false);
 		console.log('canceled');
+
+		// const myuuid = uuid();
+		// console.log('Your UUID is:' + myuuid);
+		// console.log(typeof myuuid);
+
 	}
 	function onAdd(foodName: string){
 		fetch('http://localhost:3000/add',{
@@ -29,7 +35,11 @@ export default function App() {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({"name":foodName}),
+			body: JSON.stringify({
+				"id":uuid(),
+				"name":foodName
+			}),
+			// body: JSON.stringify({"name":foodName}),
 		})
 		.then(data => {
 			console.log('Success', data)
@@ -41,12 +51,14 @@ export default function App() {
 	}
 
 	async function fetchFoodList() {
+		console.log("about to fetch some food...");
 		const response = await fetch('http://localhost:3000/groceries', {
 			method:'GET',
 			headers: {
 				'accept': 'application/json',
 			}
 		});
+		console.log("got some food...", response);
 		const newList: FoodObj[] = await response.json();
 		console.log('newList', newList);
 		const newFoodList: FoodList = {
@@ -90,7 +102,7 @@ export default function App() {
 
 	React.useEffect(() => {
 		fetchFoodList();
-	}, [addModalIsOpen]);
+	}, [foodList]);
 
 	return (
 		<div className="App">
