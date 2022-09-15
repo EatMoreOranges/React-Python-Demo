@@ -5,6 +5,9 @@ from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 import requests 
 
+from dotenv import load_dotenv
+import os 
+
 # from . import crud, models, schemas
 # from .database import SessionLocal, engine
 import crud, models, schemas
@@ -88,7 +91,7 @@ def find_by_ingredients(ingredients):
     url= 'https://api.spoonacular.com/recipes/findByIngredients'
     headers = {
         'Content-Type':'application/json',
-        'x-api-key':'5f7e2071f29948479325029bcd0a61d7' }
+        'x-api-key':os.getenv('SPOONACULAR_API_KEY')  }
     parameters ={
         'ingredients': ingredients}
 
