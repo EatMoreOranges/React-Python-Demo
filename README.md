@@ -1,34 +1,32 @@
-# Backend
-## Set up
-We suggest creating a virtual environment for your backend.
+# Set Up
+ ### For this application to run, you need to run the fronend at the same time as the backend.
 
-## <details> <summary>  Virtual Environment Setup</summary>
+   # Backend
+To start the backend, open a terminal within the backend directory `/React-Python-Demo/backend`. We suggest creating a virtual environment for your backend.
 
+<details> 
+<summary> Virtual Environment Setup  </summary>
 
-**Create:** python310 -m venv venv
+**Create Envirenment:** `python3 -m venv myvenv` You only need to create the virtual envirenment once. All the files created for the virtual envirnment will be in a folder with the same name as your virtual envirnment. In this case "myvenv".
 
-**Activate:** source venv/Scripts/activate
+**Activate Envirenment:** `source myvenv/Scripts/activate` (_for Mac:_ `source myvenv/bin/activate`) Every time you want to use your backend (for development for just for running), you need to activate your virtual envirnment.
 
-**Deactivate:** deactivate
+**Deactivate Envirenment:** deactivate
 
 </details>
 
-You need to install a few packages to get this project up and running. Run the following commands:
-- [ ] `pip install fastapi`
-- [ ] `pip install "uvicorn[standard]"`
+### Packages Required
+Be sure to have the following packages installed before you start. 
 
-After install the packages create a folder named "backend" and inside the backend folder, create a file named `main.py`. Within the `main.py` file, add the following to create your app instance and your first endpoint! 
-``` python
-from fastapi import FastAPI 
+-  `pip install "fastapi[all]"` will install both FastAPI and Uvicorn
+-  `pip install sqlalchemy` for sqlalchemy
+-  `pip install psycopg2` for psycopg2
 
-app = FastAPI()
+### Start Backend
 
-@app.get("/")
-async def welcome():
-    return "Who's Hungry!"
-```
-Now you are ready to start your backend application. To run the backend application run the `uvicorn main:app --reload` . *If uvicorn has been installed but you're getting a uvicorn not recognized error try adding **python -m**  before the command.* (`python -m uvicorn main:app --reload`)
+Now you are ready to start the backend of your application! To start the backend application, run the `uvicorn main:app --reload` command (make sure your terminal is opened at the directory `/React-Python-Demo/backend`). 
 
+*If uvicorn has been installed but you're getting a uvicorn not recognized error try adding **python -m**  before the command* (`python -m uvicorn main:app --reload`). To see your endpoint in action, enter http://localhost:8000 in the URL space of your browser. 
 
-# Frontend
-Open a terminal in the main project directory (make sure you;re not in the backend directory). Run the command "npx create-react-app frontend". This will create a folder called frontend which holds all of your react frontend. in the frontend directory run npm start to run the frontend application. the package.json file add this key value pair in the json doc ("proxy":"http://localhostOfBackend")
+# insert screenshot of final result
+
