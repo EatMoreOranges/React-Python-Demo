@@ -1,18 +1,9 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI 
 from pydantic import BaseModel 
-from sqlalchemy.orm import Session 
-
 from fastapi.middleware.cors import CORSMiddleware
 import requests 
 
-# from . import crud, models, schemas
-# from .database import SessionLocal, engine
-import crud, models, schemas
-from database import SessionLocal, engine
 
-# Initialize tables; generally, Alembic is a tool meant for initializing DBs and migrations.
-# But, for now we can use this
-models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -28,51 +19,30 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Dependancy
-def get_db():
-    db = SessionLocal()
-    try: 
-        yield db
-    finally:
-        db.close()
-
-class Food2(BaseModel):
-    id:str
+class Food(BaseModel):
     name:str
 
-
-# grocery_list = [
-#     {"name":"oranges"},
-#     {"name":"bread"}
-# ]
+grocery_list = [
+    {"name":"oranges"},
+    {"name":"bread"}
+]
 
 ## Endpoints
 @app.get("/")
 async def welcome():
     return "Who's Hungry!"
 
-
-@app.get("/groceries", response_model = list[schemas.Food])
-def get_groceries_list(skip: int = 0, limit: int = 50, db: Session = Depends(get_db)):
-    grocery_list = crud.get_grocery_list(db, skip, limit=limit)
+@app.get("/groceries")
+async def get_groceries_list():
     return grocery_list
 
-@app.post('/add', response_model = schemas.Food)
-def add_to_grocery_list(food:schemas.FoodCreate, db: Session = Depends(get_db)):
-    return crud.add_to_grocery_list(db=db, food=food)
-
-
-# @app.get("/groceries")
-# async def get_groceries_list():
-#     return grocery_list
-
-# @app.post('/add')
-# async def add_item(item:Food):
-#     grocery_list.append(item)
-#     return "Added " + item.name
+@app.post('/add')
+async def add_item(item:Food):
+    grocery_list.append(item)
+    return "Added " + item.name
 
 @app.get('/recipes')
-async def find_recipes(item:Food2): #schemas.Food
+async def find_recipes(item:Food):
     result = []
     response = find_by_ingredients(item.name)
 
